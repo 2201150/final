@@ -1,0 +1,53 @@
+/**/
+#file1 {
+     color: #00bcd4;
+}
+body {
+  font-family: sans-serif;
+  background: #cffa97;
+}
+
+.select {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.select label,
+.select .btn {
+  cursor: pointer;
+}
+
+.select .btn {
+  position: relative;
+  display: inline-block;
+  font-weight: bold;
+  padding: 0.25em 0.5em;
+  text-decoration: none;
+  color: #00bcd4;
+  transition: 0.2s;
+  white-spacing: 10;
+  border: 0.5px solid #bdbdbd;
+  border-right: 0;
+}
+
+.select .btn.active {
+  background: #00bcd4;
+  color: #110f0f;
+}
+.select .btn.active2 {
+  background: #00d451;
+  color: #110f0f;
+}
+.select .btn.active3 {
+  background: #e0ec31;
+  color: #110f0f;
+}
+.select .btn.active4 {
+  background: #f36026e8;
+  color: #110f0f;
+}
+
+
+
+
+
