@@ -27,18 +27,20 @@
 
         if ($query->rowCount() > 0) {
             echo '<div class="select">';
-            echo '<audio id="audioPlayer" controls>';
+            
             while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
                 $mp3URL = 'uploads/' . $row["file_name"];
-                echo '<source src="musics/' . $mp3URL . '" type="audio/mp3">';
-            }
-            echo '</audio>';
-            echo '</div>';
-            echo '<div class="select">';
-            echo '<button onclick="play()" class="btn active">再生</button>';
+                echo $row["file_name"]."<br>";
+                echo '<source src="uploads/' . $mp3URL . '" type="audio/mp3">';
+                
+            echo '<br><button onclick="play()" class="btn active">再生</button>';
             echo '<button onclick="loop()" class="btn active2">連続再生</button>';
             echo '<button onclick="stopp()" class="btn active3">一時停止</button>';
             echo '<button onclick="stopp2()" class="btn active4">停止＆再生時間リセット</button><br>';
+            echo '<audio id="audioPlayer" controls><br>';
+                
+            }
+            echo '</audio>';
             echo '</div>';
         } else {
             // ファイルが見つからない場合の処理
