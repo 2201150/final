@@ -3,27 +3,39 @@
     <head>
         <meta charset="UTF-8">
         <title>画像をアップロード</title>
-        <meta name="description" content="画像ファイルをアップロードします。">
+        <!--CSS読み込み-->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <!--JavaScript読み込み-->
+    <script src="js/script.js"></script>
+        <meta name="description" content="音楽ファイルをアップロードします。">
     </head>
-    <body>
+    <body onload="load()">
     <form action="upload.php" method="post" enctype="multipart/form-data">
-    アップロードする画像ファイルを選択する:
-    <input type="file" name="file">
+    アップロードする音楽ファイルを選択する:
+
+    <div class="select">
+    <input type="file" name="file" id="file1"  accept=".mp3,.m4a,.aac,.wav,.flac">
+    <a><label for="file1" id="audioInput"></label></a>
     <input type="submit" name="submit" value="Upload">
+    </div>
     </form>
     <div>
     <?php
-    // データベース設定ファイルを含む
     include 'dbConfig.php';
 
-    // データベースから画像を取得する
     $query = $pdo->query("SELECT * FROM images ORDER BY uploaded_on DESC");
 
     if ($query->rowCount() > 0) {
         while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
             $imageURL = 'uploads/' . $row["file_name"];
-            // 画像を表示するコード
-            echo '<img src="' . $imageURL . '" alt="" />';
+            echo $mp3URL;
+            echo '<source id="audioSource" src="musics/' . $mp3URL . '" type="audio/mp3">';
+
+        echo '<div class="select">
+        <button onclick="play()" class="btn active">再生</button>';
+        echo '<button onclick="loop()" class="btn active2">連続再生</button>';
+        echo '<button onclick="stopp()" class="btn active3">一時停止</button>';
+        echo '<button onclick="stopp2()" class="btn active4">停止＆再生時間リセット</button><br></div>';
         }
     } else {
         // 画像が見つからない場合の処理
