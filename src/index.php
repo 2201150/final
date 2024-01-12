@@ -27,7 +27,7 @@
 
     if ($query->rowCount() > 0) {
         while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-            $imageURL = 'uploads/' . $row["file_name"];
+            $mp3URL = 'uploads/' . $row["file_name"];
             echo $mp3URL;
             echo '<source id="audioSource" src="musics/' . $mp3URL . '" type="audio/mp3">';
 
