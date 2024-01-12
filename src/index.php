@@ -38,8 +38,8 @@
         echo '<button onclick="stopp2()" class="btn active4">停止＆再生時間リセット</button><br></div>';
         }
     } else {
-        // 画像が見つからない場合の処理
-        echo '<p>画像が見つからず表示されません..</p>';
+        // ファイルが見つからない場合の処理
+        echo '<p>音楽ファイルが見つからず表示されません..</p>';
     }
     ?>
     </div>
