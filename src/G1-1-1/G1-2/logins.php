@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require 'DB.php';
+require(__DIR__ . '/../../dbConfig.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // 入力されたメールアドレスとパスワードを取得
@@ -9,26 +9,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pass = $_POST['pass'];
 
     // データベースへの接続を取得
-    include '../dbConfig.php';
+    include '../../dbConfig.php';
 
     try {
         // データベースからユーザー情報を取得
-        $stmt = $pdo->prepare("SELECT * FROM User WHERE user_name = :mail");
+        $stmt = $pdo->prepare("SELECT * FROM USER WHERE user_name = :mail");
         $stmt->bindParam(':mail', $mail);
         $stmt->execute();
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        $USER = $stmt->fetch(PDO::FETCH_ASSOC);
 
         // パスワードの照合
-        if ($user && password_verify($pass, $user['password'])) {
+        if ($USER && password_verify($pass, $USER['pass'])) {
             
             // セッションでのユーザ情報の保存
-            $_SESSION['user_id'] = $user['user_id'];
-            $_SESSION['personal_mail_address']=$user['mail_address'];//メールアドレス
+            $_SESSION['user_id'] = $USER['user_id'];
+            $_SESSION['user_name'] = $USER['user_name'];
             //電話番号、メールアドレスもセッションに保存する修正中
 
 
             // ログイン後の遷移先にリダイレクト
-            header('Location: ../../G1-2/index.php');
+            header('Location: ../../G1-2/G1-1/main.php');
             exit();
         } else {
             // ログイン失敗時の処理

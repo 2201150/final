@@ -11,6 +11,6 @@
 <body>
     <h1 id="title">登録完了しました</h1>
     
-    <button class="btn2" onclick="location.href='../G1-1-2/index.php'">ログインページに移動</button>
+    <button class="btn2" onclick="location.href='../G1-2/login.php'">ログインページに移動</button>
 </body>
 </html>
