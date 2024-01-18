@@ -6,6 +6,11 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <title>画像をアップロード</title>
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
     <!-- CSS読み込み -->
     <link rel="stylesheet" type="text/css" href="css/style.css">
 
@@ -14,21 +19,18 @@ session_start();
     <meta name="description" content="音楽ファイルをアップロードします。">
 </head>
 <body>
+        
         <?php
-        include '../../dbConfig.php';
-        /*$query = $pdo->prepare("SELECT * FROM Musicdetail WHERE user_id=? ORDER BY user_id DESC");
-        $query->execute([$_SESSION['user_id']]);
+        /**include '../../dbConfig.php';
+        $query = $pdo->query("SELECT * FROM Category  ORDER BY categoryID ASC");
+        $categoryArray=array();
         while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-        echo "<a href='../G1-2/main_f.php ? id=".$row['music_folder']."'>".$row['music_folder']."</a><br />";
-        echo "<a href='../G1-2/main_f.php?id=".$row['music_folder']."'>".$row['music_folder']."</a><br />";
-        }*/
-        $query = $pdo->query("SELECT * FROM Category  ORDER BY categoryID DESC");
-        while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-        echo "<a href='../G1-2/main_f.php?id=".$row['category_name']."'>".$row['category_name']."</a><br />";
+        $categoryArray[]=array(
+            'category'=>$row['category_name']
+        );
         }
+        **/
         ?>
-
-
 
 
     <form action="upload.php" method="post" enctype="multipart/form-data">
@@ -45,12 +47,75 @@ session_start();
             歌詞　　:
             <input type="text" id="mail" name="mail" class="m" placeholder="入力してください" required>
             <br>
+
+            カテゴリを選択:
+            <select id="selectBox" name="selectBox" onchange="toggleTextBox()">
+            <?php
+            include '../../dbConfig.php';
+            $query = $pdo->query("SELECT * FROM Category  ORDER BY categoryID ASC");
+            while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+            echo "<option value='".$row['category_name']."'>".$row['category_name']."</option>";
+            }
+            ?>
+            </select>
+            <br>
+            <div id="textBox">
+            カテゴリ名入力:
+            <input type="text" id="inputText" name="inputText" class="hidden">
+            </div>
+            <br>
+
+
+            フォルダを選択:
+            <select id="selectfolder" name="selectfolder" onchange="folder()">
+            <?php
+            $query = $pdo->query("SELECT * FROM Musicdetail ");
+            echo "<option value='フォルダ新規作成'>フォルダ新規作成</option>";
+            while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+            echo "<option value='".$row['music_folder']."'>".$row['music_folder']."</option>";
+            }
+            ?>
+            </select>
+            <br>
+            <div id="folders">
+            フォルダ名入力:
+            <input type="text" id="inputfolder" name="inputfolder" class="hidden"><br>
+            (＊同じ名前のフォルダは作成できません。すでに存在している場合はそのフォルダに統合されます。)
+            </div>
+            <br>
             <input type="submit" name="submit" value="Upload">
             <br>
             <button type="button" onclick="history.back()" class="btn-back">戻る</button>
     </form>
     <div>
     </div>
+
+    <script>
+    document.getElementById("inputText").classList.remove("hidden");
+    document.getElementById("inputfolder").classList.remove("hidden");
+
+    function toggleTextBox() {
+        var selectBox = document.getElementById("selectBox");
+        var textBox = document.getElementById("textBox");
+        
+        if (selectBox.value === "その他") {
+            textBox.classList.remove("hidden");
+        } else {
+            textBox.classList.add("hidden");
+        }
+    }
+
+    function folder() {
+        var selectfolder = document.getElementById("selectfolder");
+        var folders = document.getElementById("folders");
+        
+        if (selectfolder.value === "フォルダ新規作成") {
+            folders.classList.remove("hidden");
+        } else {
+            folders.classList.add("hidden");
+        }
+    }
+    </script>
 
 
 </body>
