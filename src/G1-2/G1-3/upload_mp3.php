@@ -38,14 +38,15 @@ session_start();
         アップロードする音楽ファイルを選択してください:<br>
         <input type="file" name="file" id="file1" accept=".mp3">
             <a><label for="file1" id="audioInput"></label></a><br>
+            (＊同一フォルダ内に同じ名前のファイルが存在する場合、上記で選択したファイルに上書きされるのでご注意ください)<br>
             楽曲名　:
-            <input type="text" id="mail" name="mail" class="m" placeholder="入力してください" required>
+            <input type="text"  name="musicname"  placeholder="入力してください" required>
             <br>
             楽曲説明:
-            <input type="text" id="mail" name="mail" class="m" placeholder="入力してください" required>
+            <input type="text"  name="musicdetail" placeholder="入力してください" required>
             <br>
             歌詞　　:
-            <input type="text" id="mail" name="mail" class="m" placeholder="入力してください" required>
+            <input type="text"  name="lyrics" placeholder="入力してください" required>
             <br>
 
             カテゴリを選択:
@@ -54,7 +55,7 @@ session_start();
             include '../../dbConfig.php';
             $query = $pdo->query("SELECT * FROM Category  ORDER BY categoryID ASC");
             while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-            echo "<option value='".$row['category_name']."'>".$row['category_name']."</option>";
+            echo "<option value='".$row['categoryID']."'>".$row['category_name']."</option>";
             }
             ?>
             </select>
@@ -69,7 +70,7 @@ session_start();
             フォルダを選択:
             <select id="selectfolder" name="selectfolder" onchange="folder()">
             <?php
-            $query = $pdo->query("SELECT * FROM Musicdetail ");
+            $query = $pdo->query("SELECT DISTINCT music_folder FROM Musicdetail ");
             echo "<option value='フォルダ新規作成'>フォルダ新規作成</option>";
             while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
             echo "<option value='".$row['music_folder']."'>".$row['music_folder']."</option>";
@@ -98,7 +99,7 @@ session_start();
         var selectBox = document.getElementById("selectBox");
         var textBox = document.getElementById("textBox");
         
-        if (selectBox.value === "その他") {
+        if (selectBox.value === "1") {
             textBox.classList.remove("hidden");
         } else {
             textBox.classList.add("hidden");

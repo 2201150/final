@@ -1,13 +1,20 @@
 <?php
-// データベース設定ファイルを含む
-include 'dbConfig.php';
+session_start();
+?>
+<?php
+include '../../dbConfig.php';
 $statusMsg = '';
 
 // ファイルのアップロード先
-$targetDir = "uploads/";
+$targetDir = "../../uploads/";
 $fileName = basename($_FILES["file"]["name"]);
 $targetFilePath = $targetDir . $fileName;
 $fileType = pathinfo($targetFilePath,PATHINFO_EXTENSION);
+if($_POST['selectfolder']=== "フォルダ新規作成"){
+$folder=$_POST['inputfolder'];
+}else{
+    $folder=$_POST['selectfolder'];
+}
 
 if(isset($_POST["submit"]) && !empty($_FILES["file"]["name"])){
     // 特定のファイル形式の許可
@@ -15,8 +22,7 @@ if(isset($_POST["submit"]) && !empty($_FILES["file"]["name"])){
     if(in_array($fileType, $allowTypes)){
         // サーバーにファイルをアップロード
         if(move_uploaded_file($_FILES["file"]["tmp_name"], $targetFilePath)){
-            // データベースに画像ファイル名を挿入
-            $insert = $pdo->query("INSERT into images (file_name, uploaded_on) VALUES ('".$fileName."', NOW())");
+            $insert = $pdo->query("INSERT into  Musicdetail(user_ID,category_ID,music_name,music_file,music_folder,music_detail,lyrics) VALUES ('".$_SESSION['user_id']."','".$_POST["selectBox"]."','".$_POST["musicname"]."','".$fileName."','".$folder."',  '".$_POST["musicdetail"]."','".$_POST["lyrics"]."' )");
             if($insert){
                 $statusMsg = " ".$fileName. " が正常にアップロードされました";
             }else{
@@ -36,4 +42,4 @@ if(isset($_POST["submit"]) && !empty($_FILES["file"]["name"])){
 echo $statusMsg;
 ?>
 <br>
-<a href="index.php">戻る</a>
+<a href="../G1-1/main.php">戻る</a>

@@ -19,7 +19,7 @@ echo "<a href="."../G1-3/upload_mp3".">新規音楽追加</a><br />";
     <div>
         <?php
         include '../../dbConfig.php';
-        $query = $pdo->prepare("SELECT * FROM Musicdetail WHERE user_id=? ORDER BY user_id DESC");
+        $query = $pdo->prepare("SELECT DISTINCT music_folder FROM Musicdetail WHERE user_id=? ORDER BY user_id DESC");
         $query->execute([$_SESSION['user_id']]);
         while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
         /*echo "<a href='../G1-2/main_f.php ? id=".$row['music_folder']."'>".$row['music_folder']."</a><br />";*/
