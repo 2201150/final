@@ -35,7 +35,7 @@ session_start();
 
     <form action="upload.php" method="post" enctype="multipart/form-data">
         <h2>音楽アップロード</h2>
-        アップロードする音楽ファイルを選択してください:<br>
+        アップロードする音楽ファイルを選択してください(ファイル形式：.mp3):<br>
         <input type="file" name="file" id="file1" accept=".mp3">
             <a><label for="file1" id="audioInput"></label></a><br>
             (＊同一フォルダ内に同じ名前のファイルが存在する場合、上記で選択したファイルに上書きされるのでご注意ください)<br>
