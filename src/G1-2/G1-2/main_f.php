@@ -15,8 +15,16 @@ session_start();
 <body>
     <div>
         <?php
+        echo $_GET['id']."<br>";
         include '../../dbConfig.php';
-        echo $_GET['id'];
+        $query = $pdo->prepare("SELECT DISTINCT music_folder,music_name,music_file FROM Musicdetail WHERE user_id=? AND music_folder=? ORDER BY user_id DESC");
+        $query->execute([$_SESSION['user_id'],$_GET['id']]);
+        while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+        /*echo "<a href='../G1-2/main_f.php ? id=".$row['music_folder']."'>".$row['music_folder']."</a><br />";*/
+        /*echo "<a href='../G1-2/main_f.php?id=".$row['music_folder']."'>".$row['music_folder']."</a><br />";*/
+        echo $row['music_name']."_".$row['music_folder']."_".$row['music_file']."<br>";
+        }
+
         /*$query = $pdo->query("SELECT * FROM images ORDER BY uploaded_on DESC");
         if ($query->rowCount() > 0) {
             while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
@@ -35,6 +43,8 @@ session_start();
             echo '<p>音楽ファイルが見つかりませんでした。</p>';
         }**/
         ?>
+        
     </div>
 </body>
 </html>
+
